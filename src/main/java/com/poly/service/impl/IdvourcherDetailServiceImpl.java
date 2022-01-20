@@ -2,29 +2,36 @@ package com.poly.service.impl;
 
 import com.poly.domain.Idvourcher;
 import com.poly.domain.Idvourcherdetail;
+//import com.poly.repository.IdvourcherDetailRepository;
 import com.poly.repository.IdvourcherDetailRepository;
 import com.poly.service.IdvourcherDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class IdvourcherDetailServiceImpl implements IdvourcherDetailService {
+public class IdvourcherDetailServiceImpl  implements  IdvourcherDetailService{
     @Autowired
     IdvourcherDetailRepository repository;
 
     @Override
-    public List<Idvourcherdetail> findAllByIDVourcher(Idvourcher irvourcher) {
-        return repository.findByiDVourcher(irvourcher);
+    @Query("SELECT i FROM Idvourcherdetail i " +
+            "WHERE  i.iDVourcher.IDVourcher_id = ?1")
+    public List<Idvourcherdetail> findByIDVourcher_id(Long id) {
+        return repository.findByIDVourcher_id(id);
     }
+
     @Override
-    public Page<Idvourcherdetail> findAllByIDVourcher(Idvourcher irvourcher, Pageable pageable) {
-        return repository.findByiDVourcher(irvourcher, pageable);
+    @Query("SELECT i FROM Idvourcherdetail i " +
+            "WHERE  i.iDVourcher.IDVourcher_id = ?1")
+    public Page<Idvourcherdetail> findByIDVourcher_id(Long id, Pageable pageable) {
+        return repository.findByIDVourcher_id(id, pageable);
     }
 
     @Override

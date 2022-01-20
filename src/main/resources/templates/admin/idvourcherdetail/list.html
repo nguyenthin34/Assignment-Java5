@@ -29,42 +29,42 @@
                     </thead>
                     <tbody>
                         <tr th:each="idvourcherDetail : ${idvourcherDetailPage}">
-                            <th scope="row" th:text="${idvourcherDetail.irVourcherDetailId}"></th>
+                            <th scope="row" th:text="${idvourcherDetail.id}"></th>
                             <td th:text="${idvourcherDetail.price}">Mark</td>
                             <td th:text="${idvourcherDetail.quantity}">Mark</td>
-                            <td th:text="${idvourcherDetail.product.name}">Mark</td>
-                            <td th:text="${idvourcherDetail.iDVourcher.id}">Mark</td>
+                            <td th:text="${idvourcherDetail.product.commodity.name}">Mark</td>
+                            <td th:text="${idvourcherDetail.iDVourcher.IDVourcher_id}">Mark</td>
                         </tr>
                     </tbody>
                 </table>
 
             </div>
             <input type="hidden" th:value="${irvourcherID}">
-<!--            <div class="card-footer">-->
-<!--                <input type="hidden" name="idvourcherID" value="${idvourcherID}">-->
-<!--                <nav aria-label="Page navigation example" th:if="${idvourcherDetailPage.totalPages > 0}">-->
-<!--                    <ul class="pagination pagination-sm justify-content-center">-->
-<!--                        <li th:class="${idvourcherDetailPage.number + 1 == 1} ? 'page-item active' : 'page-item'">-->
-<!--                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID}, size=${idvourcherDetailPage.size}, page=${1})}"-->
-<!--                                class="page-link">First</a>-->
-<!--                        </li>-->
+            <div class="card-footer">
+                <input type="hidden" name="idvourcherID" value="${idvourcherID}">
+                <nav aria-label="Page navigation example" th:if="${idvourcherDetailPage.totalPages > 0}">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <li th:class="${idvourcherDetailPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID}, size=${idvourcherDetailPage.size}, page=${1})}"
+                                class="page-link">First</a>
+                        </li>
 
-<!--                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"-->
-<!--                            th:if="${idvourcherDetailPage.totalPages > 1}"-->
-<!--                            th:class="${pageNumber == idvourcherDetailPage.number + 1} ? 'page-item active' : 'page-item'">-->
-<!--                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${idvourcherDetailPage.size}, page=${pageNumber})}"-->
-<!--                                class="page-link" th:text="${pageNumber}"></a>-->
-<!--                        </li>-->
+                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${idvourcherDetailPage.totalPages > 1}"
+                            th:class="${pageNumber == idvourcherDetailPage.number + 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${idvourcherDetailPage.size}, page=${pageNumber})}"
+                                class="page-link" th:text="${pageNumber}"></a>
+                        </li>
 
 
-<!--                        <li-->
-<!--                            th:class="${idvourcherDetailPage.number + 1 == idvourcherDetailPage.totalPages} ? 'page-item active' : 'page-item'">-->
-<!--                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${idvourcherDetailPage.size}, page=${idvourcherDetailPage.totalPages})}"-->
-<!--                                class="page-link">Last</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </nav>-->
-<!--            </div>-->
+                        <li
+                            th:class="${idvourcherDetailPage.number + 1 == idvourcherDetailPage.totalPages} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/idvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${idvourcherDetailPage.size}, page=${idvourcherDetailPage.totalPages})}"
+                                class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </section>
 </body>

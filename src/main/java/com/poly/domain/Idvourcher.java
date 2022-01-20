@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "idvourchers", indexes = {
         @Index(name = "FK_Users_IDVourchers_idx", columnList = "creator")
@@ -46,4 +47,6 @@ public class Idvourcher {
     @Column(name = "status", nullable = false)
     private Integer status;
 
+    @OneToMany(mappedBy = "iDVourcher")
+    List<Idvourcherdetail> idvourcherdetailList;
 }

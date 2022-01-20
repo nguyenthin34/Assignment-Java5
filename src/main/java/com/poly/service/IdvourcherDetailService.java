@@ -5,6 +5,7 @@ import com.poly.domain.Idvourcherdetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,9 +13,13 @@ import java.util.Optional;
 public interface IdvourcherDetailService {
 
 
-    List<Idvourcherdetail> findAllByIDVourcher(Idvourcher irvourcher);
+    @Query("SELECT i FROM Idvourcherdetail i " +
+            "WHERE  i.iDVourcher.IDVourcher_id = ?1")
+    List<Idvourcherdetail> findByIDVourcher_id(Long id);
 
-    Page<Idvourcherdetail> findAllByIDVourcher(Idvourcher irvourcher, Pageable pageable);
+    @Query("SELECT i FROM Idvourcherdetail i " +
+            "WHERE  i.iDVourcher.IDVourcher_id = ?1")
+    Page<Idvourcherdetail> findByIDVourcher_id(Long id, Pageable pageable);
 
     List<Idvourcherdetail> findAll();
 

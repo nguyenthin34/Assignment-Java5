@@ -32,7 +32,6 @@ public class IdvourcherDetailController {
             @RequestParam("idvourcherID") Optional<Long> idvourcherID,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
-
         int currentPage = page.orElse(1);
         int sizePage = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage - 1, sizePage);
@@ -40,9 +39,9 @@ public class IdvourcherDetailController {
         if(idvourcherID.isEmpty()){
             resultPage = service.findAll(pageable);
         }else if(idvourcherID.isPresent()){
-            Idvourcher idvourcher = idvourcherService.getById(idvourcherID.get());
+            Idvourcher idvourcher = idvourcherService.findById(idvourcherID.get()).get();
             model.addAttribute("irvourcherID", idvourcherID.get());
-            resultPage = service.findAllByIDVourcher(idvourcher, pageable);
+            resultPage = service.findByIDVourcher_id(idvourcherID.get(), pageable);
         }else{
             resultPage = service.findAll(pageable);
         }
@@ -73,7 +72,7 @@ public class IdvourcherDetailController {
         }else if(idvourcherID.isPresent()){
             Idvourcher idvourcher = idvourcherService.getById(idvourcherID.get());
             model.addAttribute("idvourcherID", idvourcherID.get());
-            resultPage = service.findAllByIDVourcher(idvourcher, pageable);
+            resultPage = service.findByIDVourcher_id(idvourcherID.get(), pageable);
         }else{
             resultPage = service.findAll(pageable);
         }
