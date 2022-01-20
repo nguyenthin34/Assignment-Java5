@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/homepage.html}">
+
+<head>
+
+</head>
+
+<body>
+
+    <section class="row" layout:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>List Of Categories</h2>
+                <div th:if="${param.message != null}" class="alert alert-primary">
+                    <i>[[${param.message}]]</i>
+                </div>
+                <div th:if="${message != null}" class="alert alert-primary">
+                    <i>[[${message}]]</i>
+                </div>
+                <div>
+                    <form th:action="@{/admin/categories/paginated}">
+                        <div class="form-inline mt-2 mb-2 float-left">
+                            <label for="name">Name: </label>
+                            <input type="text" class="form-control" name="name" id="name" aria-describedby="helpHid"
+                                placeholder="Name" />
+                            <button class="btn btn-outline-primary mt-2">Search</button>
+                            <a class="btn btn-outline-primary mt-2" th:href="@{/admin/categories/add}">Add New
+                                Category</a>
+                        </div>
+                    </form>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Category ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="category : ${categoryPage}">
+                            <th scope="row" th:text="${category.categoryId}"></th>
+                            <td th:text="${category.name}">Mark</td>
+                            <td th:text="${category.status} ? 'Active' : 'Inactive'"></td>
+                            <td><a th:href="'/admin/categories/setStatus/' + ${category.categoryId}"
+                                    class="btn btn-outline-danger"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+                            </td>
+                            <td><a th:href="'/admin/categories/edit/' + ${category.categoryId}"
+                                    class="btn btn-outline-warning"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <nav aria-label="Page navigation example" th:if="${categoryPage.totalPages > 0}">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <li th:class="${categoryPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${categoryPage.size}, page=${1})}"
+                                class="page-link">First</a>
+                        </li>
+
+                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${categoryPage.totalPages > 1}"
+                            th:class="${pageNumber == categoryPage.number + 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${categoryPage.size}, page=${pageNumber})}"
+                                class="page-link" th:text="${pageNumber}"></a>
+                        </li>
+
+
+                        <li
+                            th:class="${categoryPage.number + 1 == categoryPage.totalPages} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${categoryPage.size}, page=${categoryPage.totalPages})}"
+                                class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

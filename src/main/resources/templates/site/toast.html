@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+
+<body th:fragment="toast1(y)" onload="launch_toast();">
+<div id="toast">
+    <div id="img"><i class="far fa-bell"></i></div>
+    <div id="desc" >[[${param.message}]]</div>
+</div>
+<script th:src="@{/js/site/toast.js}"></script>
+</body>
+</html>

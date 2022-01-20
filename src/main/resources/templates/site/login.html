@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+
+<head>
+</head>
+
+<body class="text-center">
+<div layout:fragment="content">
+<main class="form-signin">
+    <div class="py-5 text-center">
+    </div>
+    <form th:action="@{/auth/login}" method="post">
+        <img class="mb-4" th:src="@{/images/user-regular.svg}" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <div class="form-floating">
+                <input type="text" name="username" class="form-control" id="floatingInput"
+                       placeholder="name@example.com" />
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control"
+                       id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name=""remember value="remember-me"> Remember me
+                </label>
+                <a th:href="@{/forgot}" class="forgot-link">Forgot Password?</a>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary">Sign in</button>
+    </form>
+</main>
+    <div th:if="${message}">
+        <th:block th:with="y='Message: ' + ${message}">
+            <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
+        </th:block>
+    </div>
+</div>
+
+</body>
+
+</html>

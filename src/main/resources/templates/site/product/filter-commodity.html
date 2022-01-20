@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+
+<head>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <div class="container">
+<div class="row" >
+  <div class="d-flex gap-5 justify-content-center col-3" id="dropdownFilter">
+    <div class="dropdown-menu pt-0 mx-0 rounded-3 shadow overflow-hidden" style="width: 280px;">
+      <ul class="list-unstyled mb-0">
+        <li th:each="category : ${categories}">
+          <a class="dropdown-item d-flex align-items-center gap-2 py-2"
+             th:href="@{'/collections/' + ${category.categoryId}}">
+                            <span class="d-inline-block bg-success rounded-circle"
+                                  style="width: .5em; height: .5em;"></span>
+          [[${category.name}]]
+        </a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-9">
+    <th:block th:with="x=${list}">
+      <div th:replace="~{/site/product/list-commodity :: commodity(${x})}"></div>
+    </th:block>
+  </div>
+</div>
+</div>
+</div>
+</body>
+
+</html>

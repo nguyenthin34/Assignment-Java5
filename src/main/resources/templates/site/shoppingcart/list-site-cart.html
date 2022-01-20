@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+<section class="about" id="about">
+    <div class="content">
+        <div class="text">
+            <div class="text-two">Cart</div>
+        </div>
+        <hr>
+      <div class=" table-responsive py-5">
+          <table class="table table-borderless">
+              <thead>
+              <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total Product</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="item : ${cartItems}">
+                  <td>
+                      <div class="galeria">
+                          <img class="imagen" th:src="@{'/site-shopping-cart/images/' + ${item.image}}" th:style="'width:70%; height:200px'">
+                      </div>
+                  </td>
+                  <td>[[${item.name}]] <br>
+                      Phiên bản: [[${item.color.name}]] / [[${item.size.name}]]</td>
+                  <td>[[${item.price}]]</td>
+                  <td>
+                      <form th:action="@{/site-shopping-cart/update}" method="post">
+                          <input type="hidden" name="productId" th:value="${item.productId}">
+                          <input type="number" style="width: 100px;"
+                                 class="form-control" th:value="${item.quantity}"
+                                 onblur="this.form.submit()" name="quantity"
+                                 aria-label="Example text with button addon" aria-describedby="button-addon1">
+                      </form>
+                  </td>
+                  <td>[[${item.total}]]</td>
+                  <td>
+                     <a class="btn btn-outline-danger"
+                        th:href="'/site-shopping-cart/remove/' + ${item.productId}">
+                         <i class="fas fa-trash"></i></a>
+                  </td>
+              </tr>
+              <tr>
+              </tbody>
+          </table>
+          <h1>[[${total}]]</h1>
+          <div class="button">
+              <button><a th:href="@{/site-shopping-cart/check-out-information}">Payment</a></button>
+          </div>
+      </div>
+    </div>
+</section>
+</div>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/homepage.html}">
+
+<head>
+
+</head>
+
+<body>
+
+    <section class="row" layout:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>List Of Customers</h2>
+                <div th:if="${param.message != null}" class="alert alert-primary">
+                    <i>[[${param.message}]]</i>
+                </div>
+                <div>
+                    <form th:action="@{/admin/customers/paginated}">
+                        <div class="form-inline mt-2 mb-2 float-left">
+                            <label for="name">Name: </label>
+                            <input type="text" class="form-control" name="name" id="name" aria-describedby="helpHid"
+                                placeholder="Name" />
+                            <button class="btn btn-outline-primary mt-2">Search</button>
+                            <a class="btn btn-outline-primary mt-2 " th:href="@{/admin/customers/add}">Add New
+                                Customer</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Customer ID</th>
+                            <th scope="col">Fullname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="customer : ${customerPage}">
+                            <th scope="row" th:text="${customer.customerId}"></th>
+                            <td th:text="${customer.fullname}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td th:text="${customer.status} ? 'Active' : 'Inactive'"></td>
+                            <td><a th:href="'/admin/customers/setStatus/' + ${customer.customerId}"
+                                    class="btn btn-outline-danger"><i class="fa fa-recycle" aria-hidden="true"></i></a>
+                            </td>
+                            <td><a th:href="'/admin/customers/edit/' + ${customer.customerId}"
+                                    class="btn btn-outline-warning"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <nav aria-label="Page navigation example" th:if="${customerPage.totalPages > 0}">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <li th:class="${customerPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${customerPage.size}, page=${1})}"
+                                class="page-link">First</a>
+                        </li>
+
+                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${customerPage.totalPages > 1}"
+                            th:class="${pageNumber == customerPage.number + 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${customerPage.size}, page=${pageNumber})}"
+                                class="page-link" th:text="${pageNumber}"></a>
+                        </li>
+
+
+                        <li
+                            th:class="${customerPage.number + 1 == customerPage.totalPages} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/categories/paginated(name=${name}, size=${customerPage.size}, page=${customerPage.totalPages})}"
+                                class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

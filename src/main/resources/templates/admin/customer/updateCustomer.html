@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/homepage.html}">
+
+<head>
+
+</head>
+
+<body>
+    <section class="row" layout:fragment="content">
+        <form th:action="@{/admin/customers/update}" method="post" th:object="${customer}">
+            <div class="card">
+                <div class="card-header">
+                    <h1 >Edit Customer</h1>
+                    <div th:if="${param.message != null}" class="alert alert-primary">
+                        <i>[[${param.message}]]</i>
+                    </div>
+                    <div th:if="${message != null}" class="alert alert-primary">
+                        <i>[[${message}]]</i>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="customerId">Customer ID:</label>
+                                <input type="text" class="form-control" th:field="*{customerId}" id="customerId"
+                                       aria-describedby="customerIdHid" placeholder="Customer ID" readonly />
+                                <small th:if="${#fields.hasErrors('customerId')}" id="customerIdHid"
+                                       class="form-text text-muted">Customer
+                                    ID is invalid</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="fullname">Full Name:</label>
+                                <input type="text" th:field="*{fullname}" class="form-control" id="fullname"
+                                       aria-describedby="fullnameHid" placeholder="fullname" />
+                                <small th:if="${#fields.hasErrors('fullname')}" id="fullnameHid"
+                                       class="form-text text-muted">Fullname is
+                                    invalid</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" th:field="*{password}" class="form-control" id="password"
+                                       aria-describedby="passwordHid" placeholder="password" readonly />
+                                <small th:if="${#fields.hasErrors('password')}" id="passwordHid"
+                                       class="form-text text-muted">Password is
+                                    invalid</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="text" th:field="*{email}" class="form-control" id="email"
+                                       aria-describedby="emailHid" placeholder="Email" />
+                                <small th:if="${#fields.hasErrors('email')}" id="emailHid"
+                                       class="form-text text-muted">Email is
+                                    invalid</small>
+                            </div>
+                            <div class="form-group mb-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                           th:field="*{status}" value="true" checked>
+                                    <label class="form-check-label" for="inlineRadio1">Active</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                           th:field="*{status}" value="false">
+                                    <label class="form-check-label" for="inlineRadio2">Inactive</label>
+                                </div>
+                                <small th:if="${#fields.hasErrors('status')}" id="nameHid" class="form-text text-muted">Status
+                                    is
+                                    invalid</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" ><i
+                            class="fa fa-save mr-2" aria-hidden="true"></i>Update</button>
+                    <button type="reset" class="btn btn-info"><i class="fa fa-rev mr-2"
+                            aria-hidden="true"></i>Reset</button>
+                </div>
+            </div>
+        </form>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+<head>
+
+</head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="py-5 text-center">
+    </div>
+    <div class="cardStyle">
+    <form th:action="@{/admin/profile/update}" method="post" th:object="${user}">
+        <div class="card">
+            <div class="card-header">
+                <h1 >Edit User</h1>
+                <div th:if="${param.message != null}" class="alert alert-primary">
+                    <i>[[${message}]]</i>
+                </div>
+                <div th:if="${message != null}" class="alert alert-primary">
+                    <i>[[${message}]]</i>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" th:field="*{username}" id="username"
+                                   aria-describedby="usernameHid" placeholder="Username" readonly/>
+                            <small th:if="${#fields.hasErrors('username')}" id="usernameHid"
+                                   class="form-text text-muted">Username
+                                ID is invalid</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname">Full Name:</label>
+                            <input type="text" th:field="*{fullname}" class="form-control" id="fullname"
+                                   aria-describedby="fullnameHid" placeholder="fullname" />
+                            <small th:if="${#fields.hasErrors('fullname')}" id="fullnameHid"
+                                   class="form-text text-muted">Fullname is
+                                invalid</small>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" th:field="*{email}" class="form-control" id="email"
+                                   aria-describedby="emailHid" placeholder="Email" />
+                            <small th:if="${#fields.hasErrors('email')}" id="emailHid"
+                                   class="form-text text-muted">Email is
+                                invalid</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" ><i
+                        class="fa fa-save mr-2" aria-hidden="true"></i>Upadate</button>
+                <button type="reset" class="btn btn-info"><i class="fa fa-rev mr-2"
+                                                             aria-hidden="true"></i>Reset</button>
+            </div>
+        </div>
+    </form>
+</section>
+</body>
+</html>

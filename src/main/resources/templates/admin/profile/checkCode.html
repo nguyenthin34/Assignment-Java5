@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Change Password</title>
+    <link rel="stylesheet" th:href="@{/css/change.css}" />
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="mainDiv">
+        <div class="cardStyle">
+            <form th:action="@{/forgot/accuracy}" method="post" name="signupForm" id="signupForm">
+                <h2 class="formTitle">Confirm to your Code</h2>
+                <div class="inputDiv">
+                    <label for="country_code">Your code: </label>
+                    <input type="text" id="country_code" name="code"/>
+                </div>
+                <div class="buttonWrapper">
+                    <button id="submitButton"
+                            class="submitButton pure-button pure-button-primary">
+                        <span>confirm</span>
+                        <!-- <span id="loader"></span> -->
+                    </button>
+                </div>
+
+            </form>
+            <div class="buttonWrapper">
+                <button   id="submitButton"
+                          class="submitButton pure-button pure-button-primary">
+                    <a th:href="@{/forgot/requestCode}">
+                        <span>Resend code</span>
+                    </a>
+
+                    <!-- <span id="loader"></span> -->
+                </button>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.message}">
+        <th:block th:with="y='Message: ' + ${param.message}">
+            <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
+        </th:block>
+    </div>
+</section>
+</body>
+
+</html>

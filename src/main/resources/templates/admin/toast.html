@@ -1,0 +1,26 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org"
+      >
+
+<head>
+
+</head>
+
+<body th:fragment="toast1(y)"  onload="load()">
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <i class="fas fa-bell mr-2"></i>
+      <strong class="me-auto">Message</strong>
+      <small id="hvn"></small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+     [(${y})]
+    </div>
+  </div>
+</div>
+<script th:src="@{/js/toast.js}"></script>
+</body>
+
+</html>

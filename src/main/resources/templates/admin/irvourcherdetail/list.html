@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/homepage.html}">
+
+<head>
+
+</head>
+
+<body>
+
+    <section class="row" layout:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>List Of Irvourcher Details</h2>
+                <div th:if="${param.message != null}" class="alert alert-primary">
+                    <i>[[${param.message}]]</i>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Irvourcher Detail ID</th>
+                            <th scope="col">Commodity</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Irvourcher ID</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="irvourcherDetail : ${irvourcherDetailPage}">
+                            <th scope="row" th:text="${irvourcherDetail.IRVourcherDetail_id}"></th>
+                            <td th:text="${irvourcherDetail.commodity.name}">Mark</td>
+                            <td th:text="${irvourcherDetail.size.name}">Mark</td>
+                            <td th:text="${irvourcherDetail.color.name}">Mark</td>
+                            <td th:text="${irvourcherDetail.price}">Mark</td>
+                            <td th:text="${irvourcherDetail.quantity}">Mark</td>
+                            <td th:text="${irvourcherDetail.irvoucher.irVoucherId}">Mark</td>
+<!--                            <td><a th:href="'/admin/irvourcherDetails/setStatus/' + ${irvourcherDetail.irVoucherId}"-->
+<!--                                   th:if="${irvourcherDetail.status}"-->
+<!--                                   class="btn btn-outline-danger"><i class="fa fa-recycle" aria-hidden="true"></i></a>-->
+                            </td>
+                            <td>
+<!--                                <a th:href="'/admin/irvourcherDetails/edit/' + ${irvourcherDetail.irVoucherId}"-->
+<!--                                    class="btn btn-outline-info"><i class="fa fa-info" aria-hidden="true"></i></a>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <input type="hidden" th:value="${irvourcherID}">
+            <div class="card-footer">
+                <input type="hidden" name="irvourcherID" value="${irvourcherID}">
+                <nav aria-label="Page navigation example" th:if="${irvourcherDetailPage.totalPages > 0}">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <li th:class="${irvourcherDetailPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/irvourcherDetails/paginated(irvourcherID=${irvourcherID}, size=${irvourcherDetailPage.size}, page=${1})}"
+                                class="page-link">First</a>
+                        </li>
+
+                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${irvourcherDetailPage.totalPages > 1}"
+                            th:class="${pageNumber == irvourcherDetailPage.number + 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/irvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${irvourcherDetailPage.size}, page=${pageNumber})}"
+                                class="page-link" th:text="${pageNumber}"></a>
+                        </li>
+
+
+                        <li
+                            th:class="${irvourcherDetailPage.number + 1 == irvourcherDetailPage.totalPages} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/irvourcherDetails/paginated(irvourcherID=${irvourcherID},size=${irvourcherDetailPage.size}, page=${irvourcherDetailPage.totalPages})}"
+                                class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

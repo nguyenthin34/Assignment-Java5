@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org" xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/homepage.html}">
+
+<head>
+
+</head>
+
+<body>
+
+    <section class="row" layout:fragment="content">
+        <div class="card">
+            <div class="card-header">
+                <h2>List Of Products</h2>
+                <div th:if="${param.message != null}" class="alert alert-primary">
+                    <i>[[${param.message}]]</i>
+                </div>
+                <div>
+                    <form th:action="@{/admin/products/paginated}">
+                        <div class="form-inline mt-2 mb-2 float-left">
+                            <select  class="form-select" name="commodityId" onblur="this.form.submit()">
+                                aria-label="Default select example">
+                                <option  th:each="commodity : ${commodities}" th:value="${commodity.commodityId}"
+                                         th:text="${commodity.name}"
+                                >Open this commodity menu</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product ID</th>
+                            <th scope="col">Commodity</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Irvourcher</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${productPage}">
+                            <form th:action="@{/admin/products/update}">
+                                <input type="hidden" name="productId" th:value="${product.productId}">
+                            <th scope="row" th:text="${product.productId}" ></th>
+                            <td th:text="${product.commodity.name}"></td>
+                            <td th:text="${product.color.name}"></td>
+                            <td th:text="${product.size.name}"></td>
+                            <td th:text="${product.unitPrice}"></td>
+                            <td>
+                                <input type="number" name="price" th:value="${product.price}" onblur="this.form.submit()">
+                            </td>
+                            <td th:text="${product.quantity}"></td>
+                            <td th:text="${product.irvoucher.irVoucherId}"></td>
+                            <td>
+                                <select  class="form-select" name="status" onblur="this.form.submit()">
+                                    aria-label="Default select example">
+                                    <option  th:each="status : ${statuses}" th:value="${status.statusId}"
+                                             th:text="${status.name}" th:selected="${product.status.statusId == status.statusId}"
+                                    >Open this status menu</option>
+                                </select>
+                            </td>
+                            </form>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <nav aria-label="Page navigation example" th:if="${productPage.totalPages > 0}">
+                    <ul class="pagination pagination-sm justify-content-center">
+                        <li th:class="${productPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/products/paginated(size=${productPage.size}, page=${1})}"
+                                class="page-link">First</a>
+                        </li>
+
+                        <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${productPage.totalPages > 1}"
+                            th:class="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/products/paginated(size=${productPage.size}, page=${pageNumber})}"
+                                class="page-link" th:text="${pageNumber}"></a>
+                        </li>
+
+
+                        <li
+                            th:class="${productPage.number + 1 == productPage.totalPages} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/admin/products/paginated( size=${productPage.size}, page=${productPage.totalPages})}"
+                                class="page-link">Last</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

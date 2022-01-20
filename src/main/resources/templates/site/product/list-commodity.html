@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/product/filter-commodity.html}">
+<head>
+</head>
+<body>
+<div th:fragment="commodity(list)">
+    <div class="container">
+        <div class="card-1 card-div" th:each="item : ${list}">
+            <div class="like-icon-div">
+                <label for="card-1-like" class="like-icon-div-child">
+                    <input type="checkbox" id="card-1-like">
+                    <i class="far fa-heart heart-empty"></i>
+                    <i class="fas fa-heart heart-fill"></i>
+                </label>
+            </div>
+
+            <div class="gow-img-div img-div">
+                <img th:src="@{'/collections/images/' + ${item.image}}"
+                     alt="god-of-war-figurine">
+            </div>
+            <div class="text-container">
+                <h2 class="item-name">[[${item.name}]]</h2>
+                <div class="pricing-and-cart">
+                    <div class="pricing">
+<!--                        <p class="previous-price">$999</p>-->
+                    </div>
+                    <a th:href="@{'/detail-product/' + ${item.commodityId}}"><i class="fas fa-shopping-cart"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

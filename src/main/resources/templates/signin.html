@@ -1,0 +1,41 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javaid Bashir :: Web developer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/login.css" type="text/css"/>
+
+</head>
+<body>
+
+    <div class="login-form">
+        <form th:action="@{/auth/login}" method="post">
+            <div class="avatar"><i class="material-icons">&#xE7FF;</i></div>
+            <h4 class="modal-title">Login to Your Account</h4>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control" placeholder="Username" required="required">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" required="required">
+            </div>
+            <div class="form-group small clearfix">
+                <label class="checkbox-inline"><input type="checkbox"> Remember me</label>
+                <a th:href="@{/forgot}" class="forgot-link">Forgot Password?</a>
+            </div>
+            <input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+        </form>
+        <div class="text-center small"><a th:href="@{/home/index}">Return Home</a></div>
+    </div>
+    <div th:if="${param.message}">
+        <th:block th:with="y='Message: ' + ${param.message}">
+            <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
+        </th:block>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

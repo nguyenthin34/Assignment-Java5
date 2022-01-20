@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{site/page.html}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+<!-- Home Section Start -->
+<section class="home" id="home">
+    <div class="home-content">
+        <div class="text">
+            <div class="text-one">Hello,</div>
+            <div class="text-two">I'm John Wick</div>
+            <div class="text-three">Frontend Developer</div>
+            <div class="text-four">From United Kingdom</div>
+        </div>
+        <div class="button">
+            <button>Hire Me</button>
+        </div>
+    </div>
+</section>
+
+<!-- product Section Start -->
+<section class="about" id="about">
+    <div class="content">
+        <div class="title"><span>Products</span></div>
+    </div>
+    <div class="row mg">
+        <!-- SECOND ROW -->
+        <div class="container">
+            <!-- <h1 class="text-center head red">Products</h1> -->
+            <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12" th:each="item : ${commodityPage}">
+                        <h3 class="text-center" th:style="'max-height:30px;'">[[${item.name}]]</h3>
+                        <div class="sm-box"
+                             th:style="'background-image: url(' + @{'/home-shop-poly/images/' + ${item.image}} + ');'">
+<!--                        <img  th:src="${item.commodity.image!=null? '/home-shop-poly/images/' + item.commodity.image : '/images/log.png'}"-->
+<!--                              alt="" >-->
+                            <div class="sm-box-overlay"></div>
+                            <div class="sm-box-basket">
+                                <a th:href="@{'/detail-product/' + ${item.commodityId}}" class="button button-red" data-toggle="modal"
+                                                      >Select</a>
+                            </div>
+                            <div class="sm-box-content"><i class="fa fa-chevron-right"></i>Click to Select to see Detail</div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div aria-label="Page navigation example "  th:if="${commodityPage.totalPages > 0}" class="mt-5">
+            <ul class="pagination pagination-sm justify-content-center">
+                <li th:class="${commodityPage.number + 1 == 1} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/home-shop-poly/paginated(size=${commodityPage.size}, page=${1})}" aria-label="Previous">
+                        <span aria-hidden="true"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+
+                <li  class="active" th:each="pageNumber : ${pageNumbers}"
+                     th:if="${commodityPage.totalPages > 1}"
+                     th:class="${pageNumber == commodityPage.number + 1} ? 'active' : ''">
+                    <a th:href="@{/home-shop-poly/paginated(size=${commodityPage.size}, page=${pageNumber})}"
+                       th:text="${pageNumber}"></a></li>
+
+                <li  th:class="${commodityPage.number + 1 == commodityPage.totalPages} ? 'page-item active' : 'page-item'">
+                    <a th:href="@{/home-shop-poly/paginated(size=${commodityPage.size}, page=${pageNumber})}"
+                       aria-label="Next">
+                        <span aria-hidden="true"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</section>
+
+<!--My Skill Section Start-->
+<section class="skills" id="skills">
+    <div class="content">
+        <div class="title"><span>My Skills</span></div>
+        <div class="skills-details">
+            <div class="text">
+                <div class="topic">Skills Reflects Our Knowledge</div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus natus tenetur tempora? Quasi, rem
+                    quas omnis. Porro rem aspernatur reiciendis ut praesentium minima ad, quos, officia! Illo
+                    libero, et, distinctio repellat sed nesciunt est modi quaerat placeat. Quod molestiae, alias?
+                </p>
+                <div class="experience">
+                    <div class="num">10</div>
+                    <div class="exp">Years Of <br> Experience</div>
+                </div>
+            </div>
+            <div class="boxes">
+                <div class="box">
+                    <div class="topic">HTML</div>
+                    <div class="per">90%</div>
+                </div>
+                <div class="box">
+                    <div class="topic">CSS</div>
+                    <div class="per">80%</div>
+                </div>
+                <div class="box">
+                    <div class="topic">Javascript</div>
+                    <div class="per">70%</div>
+                </div>
+                <div class="box">
+                    <div class="topic">Bootstrap</div>
+                    <div class="per">100%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+</div>
+</body>
+</html>

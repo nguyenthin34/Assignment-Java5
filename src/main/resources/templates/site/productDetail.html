@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="about" id="about">
+        <div class="content">
+                <div class="row">
+                    <div class="col-lg-4 order-lg-2 order-1">
+                        <div class="image_selected">
+                            <img th:src="@{'/detail-product/images/' + ${product.commodity.image}}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 order-3">
+                        <div class="product_description">
+                            <div class="product_name" th:text="${product.commodity.name}"></div>
+                        </div>
+                        <div>
+                            <span class="product_price">$ [[${product.price}]]</span>
+                        </div>
+
+                        <hr class="singleline">
+                        <div> <span class="product_info">[[${product.description}]]</span><br>
+                            <span class="product_info">[[${product.status.name}]]<span> </div>
+                        <form th:action="@{/detail-product/update}" method="get">
+                            <input type="hidden" name="commodityId" th:value="${product.commodity.commodityId}">
+                            <div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="col-xs-6">
+                                        <span class="product_options">Color</span><br>
+                                        <select class="form-select form-select-lg mb-3"
+                                                aria-label=".form-select-lg example"
+                                                name="colorId" onblur="this.form.submit()">
+                                            <option class="btn  btn-circle btn-sm mr-2"
+                                                    th:each="color : ${colors}"
+                                                    th:text="${color.name}"
+                                                    th:value="${color.colorId}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="product_options">Size</span><br>
+                                        <select class="form-select form-select-lg mb-3"
+                                                aria-label=".form-select-lg example"
+                                                name="sizeId" onblur="this.form.submit()">
+                                            <option class="btn  btn-circle btn-sm mr-2"
+                                                    th:each="size : ${sizes}"
+                                                    th:text="${size.name}"
+                                                    th:value="${size.sizeId}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                            <hr class="singleline">
+                            <div class="order_info d-flex flex-row">
+                            </div>
+                            <form th:action="@{/site-shopping-cart/addCart}" th:object="${siteCart}" method="post">
+
+                                <div class="row">
+
+                                    <div class="col-xs-6">
+                                        <input class="form-control" type="number"  name="quantity">
+                                    </div>
+                                    <div class="col-xs-6" >
+                                        <div class="button">
+                                            <input type="hidden" th:value="${product.productId}" name="productId">
+                                            <input type="hidden"  th:value="${product.commodity.image}" name="image">
+                                            <input type="hidden" th:value="${product.commodity.name}" name="name">
+                                            <input type="hidden" th:value="${product.commodity.commodityId}" name="commodityId">
+                                            <button>Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                    </div>
+                </div>
+            <div th:if="${param.message}">
+                <th:block th:with="y='Message: ' + ${param.message}">
+                    <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
+                </th:block>
+            </div>
+            </div>
+        </div>
+</section>
+</div>
+</body>
+</html>
