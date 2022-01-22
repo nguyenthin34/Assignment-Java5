@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdminCartItem {
+    private Integer id;
     private Long commodityId;
     private String name;
     private String image;

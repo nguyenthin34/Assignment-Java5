@@ -13,6 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SiteCart implements Serializable {
+
+    private Integer id;
     @NotNull
     @PositiveOrZero
     private Long productId;

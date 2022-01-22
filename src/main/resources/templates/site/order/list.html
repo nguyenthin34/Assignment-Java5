@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http:/www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/page.html}">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="py-5 text-center">
+    </div>
+    <form th:action="@{/orders/search}">
+    <div class="form-signin">
+    <div class="form-floating ">
+
+          <input type="number" name="phone" class="form-control" id="floatingInput"
+                 placeholder="Phone Number" onblur="this.form.submit()" />
+          <label for="floatingInput">Phone Number</label>
+    </div>
+    </div>
+
+    </form>
+<div class="container">
+
+    <div class="list-group">
+        <a th:each="item : ${orders}" th:href="@{'/orders/' + ${item.IDVourcher_id}}"
+           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <img th:src="@{/images/order.svg}" alt="twbs" width="100" height="50"
+                 class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+                <div>
+                    <h6 class="mb-0">Code Bill: [[${item.IDVourcher_id}]]</h6>
+                    <p class="mb-0 opacity-75">Total: [[${item.totalAmount}]]</p>
+                </div>
+                <th:block th:each="st : ${status}">
+                    <small class="opacity-50 text-nowrap" th:if="${st.key == item.status}" th:text="${st.value}"></small>
+                </th:block>
+            </div>
+        </a>
+
+    </div>
+</div>
+</div>
+</body>
+</html>

@@ -78,12 +78,6 @@
 
                     </div>
                 </div>
-            <div th:if="${param.message}">
-                <th:block th:with="y='Message: ' + ${param.message}">
-                    <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
-                </th:block>
-            </div>
-            </div>
         </div>
 </section>
 </div>

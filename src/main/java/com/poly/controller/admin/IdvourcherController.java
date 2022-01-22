@@ -1,8 +1,13 @@
 package com.poly.controller.admin;
 
 import com.poly.domain.Idvourcher;
+import com.poly.domain.Idvourcherdetail;
+import com.poly.domain.Product;
+import com.poly.service.IdvourcherDetailService;
 import com.poly.service.IdvourcherService;
 import com.poly.service.ParamService;
+import com.poly.service.ProductService;
+import groovy.transform.AutoImplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -28,8 +30,10 @@ public class IdvourcherController {
     IdvourcherService service;
     @Autowired
     ParamService paramService;
-
-
+    @Autowired
+    IdvourcherDetailService idvourcherDetailService;
+    @Autowired
+    ProductService productService;
     @ModelAttribute("status")
     public Map<Integer, String> getStatus(){
         Map<Integer, String> map = new HashMap<>();
@@ -79,6 +83,38 @@ public class IdvourcherController {
                 return "redirect:/admin/idvourchers";
             }
             entity.setStatus(status);
+            service.save(entity);
+        } else {
+            params.addAttribute("message", "Entity is not found");
+        }
+        return "redirect:/admin/idvourchers";
+    }
+
+    @GetMapping("setExport/{id}")
+    public String setExport(@PathVariable("id") Long id,
+                            ModelMap model, RedirectAttributes params) {
+        Optional<Idvourcher> optional = service.findById(id);
+        Idvourcher idvourcher = service.getById(id);
+        if (idvourcher != null) {
+            Idvourcher entity = idvourcher;
+
+            if(entity.getExport()){
+                List<Idvourcherdetail> list = idvourcherDetailService.findByIDVourcher_id(entity.getIDVourcher_id());
+                for(int i = 0;i < list.size(); i++ ){
+                    Product product = productService.findById(list.get(i).getProduct().getProductId()).get();
+                    product.setQuantity(product.getQuantity() + list.get(i).getQuantity());
+                    productService.save(product);
+                }
+                entity.setExport(false);
+            }else{
+                List<Idvourcherdetail> list = idvourcherDetailService.findByIDVourcher_id(entity.getIDVourcher_id());
+                for(int i = 0;i < list.size(); i++ ){
+                    Product product = productService.findById(list.get(i).getProduct().getProductId()).get();
+                    product.setQuantity(product.getQuantity() - list.get(i).getQuantity());
+                    productService.save(product);
+                }
+                entity.setExport(true);
+            }
             service.save(entity);
         } else {
             params.addAttribute("message", "Entity is not found");

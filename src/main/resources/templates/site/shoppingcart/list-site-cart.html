@@ -35,6 +35,7 @@
                   <td>[[${item.price}]]</td>
                   <td>
                       <form th:action="@{/site-shopping-cart/update}" method="post">
+                          <input type="hidden" name="id" th:value="${item.id}">
                           <input type="hidden" name="productId" th:value="${item.productId}">
                           <input type="number" style="width: 100px;"
                                  class="form-control" th:value="${item.quantity}"
@@ -45,7 +46,7 @@
                   <td>[[${item.total}]]</td>
                   <td>
                      <a class="btn btn-outline-danger"
-                        th:href="'/site-shopping-cart/remove/' + ${item.productId}">
+                        th:href="'/site-shopping-cart/remove/' + ${item.id}">
                          <i class="fas fa-trash"></i></a>
                   </td>
               </tr>

@@ -30,7 +30,10 @@
         </tr>
         <tr th:each="item : ${cartItems}">
           <form action="/admin/shoppingcart/update" method="post" >
-            <td><img th:src="${item.image!=null? '/admin/shoppingcart/images/' + item.image : '/images/log.png'}" alt="" style="width: 100px;height: 100px;"></td>
+            <td>
+              <input type="hidden" name="id" th:value="${item.id}">
+              <img th:src="${item.image!=null? '/admin/shoppingcart/images/' + item.image : '/images/log.png'}" alt="" style="width: 100px;height: 100px;">
+            </td>
             <td>
               <input type="hidden" th:value="${item.commodityId}" name="commodityId" />
               [[${item.name}]]
@@ -58,7 +61,7 @@
               </select>
             </td>
             <td>
-              <a th:href="'/admin/shoppingcart/remove/' + ${item.commodityId}" class="btn btn-danger">Remove</a>
+              <a th:href="'/admin/shoppingcart/remove/' + ${item.id}" class="btn btn-danger">Remove</a>
             </td>
           </form>
         </tr>
@@ -87,6 +90,11 @@
       </form>
     </div>
 
+  </div>
+  <div th:if="${param.message}">
+    <th:block th:with="y='Message: ' + ${param.message}">
+      <div th:replace="~{/admin/toast :: toast1(${y})}"></div>
+    </th:block>
   </div>
 </section>
 </body>

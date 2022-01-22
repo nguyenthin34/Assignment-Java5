@@ -17,6 +17,27 @@ import java.util.Optional;
 public class IdvourcherServcieImpl implements IdvourcherService {
     @Autowired
     IdvourcherRepository repository;
+
+    @Override
+    public Page<Idvourcher> findByCreator_Username(String username, Pageable pageable) {
+        return repository.findByCreator_Username(username, pageable);
+    }
+
+    @Override
+    public List<Idvourcher> findByCreator_Username(String username) {
+        return repository.findByCreator_Username(username);
+    }
+
+    @Override
+    public List<Idvourcher> findByPhoneLike(String phone) {
+        return repository.findByPhoneLike(phone);
+    }
+
+    @Override
+    public Page<Idvourcher> findByPhoneLike(String phone, Pageable pageable) {
+        return repository.findByPhoneLike(phone, pageable);
+    }
+
     @Override
     public List<Idvourcher> findAll() {
         return repository.findAll();

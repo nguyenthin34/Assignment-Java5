@@ -10,6 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IdvourcherService {
+    Page<Idvourcher> findByCreator_Username(String username, Pageable pageable);
+
+    List<Idvourcher> findByCreator_Username(String username);
+
+    List<Idvourcher> findByPhoneLike(String phone);
+
+    Page<Idvourcher> findByPhoneLike(String phone, Pageable pageable);
+
     List<Idvourcher> findAll();
 
     List<Idvourcher> findAll(Sort sort);

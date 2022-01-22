@@ -17,10 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 @RequestMapping("admin/shoppingcart")
@@ -100,7 +98,11 @@ public class ShoppingCartController {
         Optional<Commodity> commodity = commodityService.findById(commodityId);
         if(commodity.isPresent()){
             AdminCartItem cartItem = new AdminCartItem();
-            BeanUtils.copyProperties(commodity.get(), cartItem);
+            int ranNum = ThreadLocalRandom.current().nextInt(1,10000);
+//            BeanUtils.copyProperties(commodity.get(), cartItem);
+            cartItem.setId(ranNum);
+            cartItem.setName(commodity.get().getName());
+            cartItem.setCommodityId(commodity.get().getCommodityId());
             cartItem.setQuantity(1);
             cartItem.setUnitPrice(0.0);
             cartItem.setImage(commodity.get().getImage());
@@ -118,11 +120,11 @@ public class ShoppingCartController {
         }
         return "redirect:/admin/shoppingcart/list";
     }
-    @GetMapping("remove/{commodityId}")
-    public String remove(@PathVariable("commodityId") Optional<Long> commodityId,
+    @GetMapping("remove/{id}")
+    public String remove(@PathVariable("id") Optional<Integer> id,
                          RedirectAttributes params){
-        if(commodityId.isPresent()) {
-            service.remove(commodityId.get());
+        if(id.isPresent()) {
+            service.remove(id.get());
         }else{
             params.addAttribute("message","CartItem is not exists");
         }
@@ -131,12 +133,13 @@ public class ShoppingCartController {
 
     @PostMapping("update")
     public String update(@RequestParam("commodityId") Optional<Long> commodityId,
+                        @RequestParam("id") Optional<Integer> Id,
                          @RequestParam("unitPrice") Optional<Double> unitPrice,
                          @RequestParam("quantity") Optional<Integer> quantity,
                          @RequestParam("colorId") Optional<Long> colorId,
                          @RequestParam("sizeId") Optional<Long> sizeId,
                          RedirectAttributes params){
-        if(commodityId.isEmpty() || unitPrice.isEmpty() || quantity.isEmpty() || colorId.isEmpty() || sizeId.isEmpty()){
+        if(Id.isEmpty() ||commodityId.isEmpty() || unitPrice.isEmpty() || quantity.isEmpty() || colorId.isEmpty() || sizeId.isEmpty()){
             params.addAttribute("message", "Error! An error occurred. Please try again later!");
             return "redirect:/admin/shoppingcart/list";
         }else if(!colorService.existsById(colorId.get())){
@@ -145,12 +148,15 @@ public class ShoppingCartController {
         }else if(!sizeService.existsById(sizeId.get())){
             params.addAttribute("message", "Error! An error occurred. Size ID is Not Exists");
             return "redirect:/admin/shoppingcart/list";
-        }else if(!commodityService.existsById(commodityId.get())){
+        }
+        else if(!commodityService.existsById(commodityId.get())){
             params.addAttribute("message", "Error! An error occurred. Commodity ID is Not Exists");
             return "redirect:/admin/shoppingcart/list";
+        }else{
+            service.update(Id.get(), quantity.get(), unitPrice.get(), colorId.get(), sizeId.get());
+            return "redirect:/admin/shoppingcart/list";
         }
-        service.update(commodityId.get(), quantity.get(), unitPrice.get(), colorId.get(), sizeId.get());
-        return "redirect:/admin/shoppingcart/list";
+
     }
     @GetMapping("clear")
     public String clear() {

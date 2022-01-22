@@ -35,7 +35,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Idvourcher ID</th>
                             <th scope="col">Creator</th>
                             <th scope="col">Create Date</th>
                             <th scope="col">Total</th>
@@ -44,6 +43,8 @@
                             <th scope="col">Email</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Export</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -51,15 +52,16 @@
                         <tr th:each="idvourcher : ${idvourcherPage}">
                            <form th:action="@{/admin/idvourchers/setStatus}" method="get">
                                <input type="hidden" name="id" th:value="${idvourcher.IDVourcher_id}" />
-                               <th scope="row" th:text="${idvourcher.IDVourcher_id}"></th>
                                <td th:if="${idvourcher.creator != null}" th:text="${idvourcher.creator.username}">Mark</td>
                                <td th:unless="${idvourcher.creator != null}" ></td>
                                <td th:text="${idvourcher.createDate}">Mark</td>
                                <td th:text="${idvourcher.totalAmount}">Mark</td>
                                <td th:text="${idvourcher.phone}">Mark</td>
                                <td th:text="${idvourcher.address}">Mark</td>
-                               <td th:text="${idvourcher.name}">Mark</td>
                                <td th:text="${idvourcher.email}">Mark</td>
+                               <td th:text="${idvourcher.name}">Mark</td>
+                                <td th:text="${idvourcher.export ? 'Yes' : 'No'}"></td>
+
                                <td>
                                    <select  class="form-select" onblur="this.form.submit()" name="status">
                                        aria-label="Default select example">
@@ -67,6 +69,10 @@
                                                 th:text="${item.value}" th:selected="${item.key == idvourcher.status}"
                                        >Open this Status menu</option>
                                    </select>
+                               </td>
+                               <td>
+                                   <a th:href="'/admin/idvourchers/setExport/' + ${idvourcher.IDVourcher_id}"
+                                      class="btn btn-outline-danger"><i class="fa fa-recycle" aria-hidden="true"></i></a>
                                </td>
                                <td><a th:href="'/admin/idvourcherDetails/paginated/?idvourcherID=' + ${idvourcher.IDVourcher_id}"
                                       class="btn btn-outline-info"><i class="fa fa-info" aria-hidden="true"></i></a>

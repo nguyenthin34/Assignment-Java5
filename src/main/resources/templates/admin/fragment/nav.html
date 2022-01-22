@@ -34,8 +34,15 @@
                                 <li><a class="dropdown-item" th:href="@{/admin/commodities/commodityAddCart}">Import</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/admin/irvourchers}">Manage Order</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Manage Order
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" th:href="@{/admin/irvourchers}">Manage Irvourcher</a></li>
+                                <li><a class="dropdown-item" th:href="@{/admin/idvourchers}">Manage Idvourcher</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/admin/users}">Manage User</a>

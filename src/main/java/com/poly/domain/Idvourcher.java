@@ -47,6 +47,9 @@ public class Idvourcher {
     @Column(name = "status", nullable = false)
     private Integer status;
 
+    @Column(name = "export", nullable = false)
+    private Boolean export;
+
     @OneToMany(mappedBy = "iDVourcher")
     List<Idvourcherdetail> idvourcherdetailList;
 }
