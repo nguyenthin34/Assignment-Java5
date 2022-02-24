@@ -40,7 +40,7 @@ public class CategoryController {
     @Autowired
     HttpSession session;
     @GetMapping("add")
-    public String add(Model model) {
+    public String   add(Model model) {
         CategoriesDTO dto = new CategoriesDTO();
         dto.setIsEdit(false);
         model.addAttribute("category", dto);

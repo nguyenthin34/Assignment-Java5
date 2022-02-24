@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -62,11 +63,11 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/auth/login")
                 .defaultSuccessUrl("/auth/login/success", false)
                 .failureUrl("/auth/login/failed")
-                .usernameParameter("username")
-                .passwordParameter("password");
+                .usernameParameter("username")// mặc định [username]
+                .passwordParameter("password"); //mặc định [password]
 
         http.rememberMe()
-                .rememberMeParameter("remember");
+                .rememberMeParameter("remember"); // mặc định [remember-me]
 
         http.logout()
                 .logoutUrl("/auth/logout")
